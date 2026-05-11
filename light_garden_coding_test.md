@@ -91,6 +91,7 @@ Import 후 다음 리소스가 Workspace에 제공됩니다.
 
 > 참고: UI 모델이 명시적으로 제공되지 않은 영역은 의도된 공백일 수 있습니다. 이 경우 지원자는 제공 UI 리소스를 최대한 활용하되, 필요한 UI Entity/Component 구성은 직접 구현할 수 있습니다.
 > 참고: UI Resource는 제공된 Sprite/Image 등 원본 리소스를 수정할 수 없다는 의미입니다. UI Model, Component, Layout, Script는 `TheGardenOfLight` 폴더 내부에서 직접 구성할 수 있습니다.
+> 참고: LocalWorkSpace를 사용할 경우 AI 도구 활용에 용이해집니다.(https://maplestoryworlds-creators.nexon.com/ko/docs?postId=1165)
 
 ### 3.1 작업 폴더 규칙
 
