@@ -31,18 +31,6 @@ script SavePayloadValidationLogic extends Logic
 			return "invalid_exp"
 		end
 		
-		if payload.language ~= nil and not _RequestValidationLogic:IsValidLanguage(payload.language) then
-			return "invalid_language"
-		end
-		
-		if payload.movementMultiplier ~= nil and type(payload.movementMultiplier) ~= "number" then
-			return "invalid_movement_multiplier"
-		end
-		
-		if payload.jumpMultiplier ~= nil and type(payload.jumpMultiplier) ~= "number" then
-			return "invalid_jump_multiplier"
-		end
-		
 		if payload.inventory ~= nil and type(payload.inventory) ~= "table" then
 			return "invalid_inventory"
 		end
