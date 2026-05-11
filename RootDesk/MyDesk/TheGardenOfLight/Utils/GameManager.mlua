@@ -1,0 +1,142 @@
+@Logic
+script GameManager extends Singleton
+
+	property table _singletons = {}
+
+	@ExecSpace("ServerOnly")
+	method void InitServerSingletons()
+		-- 싱글톤 서버측 초기화
+		local singletons = {
+			_ActionLogManager,
+			_PlayerSessionManager,
+		}
+		self._singletons = singletons
+	end
+
+	@ExecSpace("ClientOnly")
+	method void InitClientSingletons()
+		-- 싱글톤 클라이언트측 초기화
+		local singletons = {
+		}
+		self._singletons = singletons
+	end
+
+	method void AddSingleton(any singleton)
+		-- 싱글톤 런타임 추가
+		if singleton == nil then
+			return
+		end
+		
+		table.insert(self._singletons, singleton)
+	end
+
+	@ExecSpace("ServerOnly")
+	method void ServerStart()
+		local count = #self._singletons
+		for index = 1, count do
+			local singleton = self._singletons[index]
+			if isvalid(singleton) and isvalid(singleton.ServerStart) then
+				singleton:ServerStart()
+			end
+		end
+		
+		self._server_started = true
+	end
+
+	@ExecSpace("ServerOnly")
+	method void ServerEnd()
+		self._server_started = false
+		
+		local count = #self._singletons
+		for index = count, 1 , -1 do
+			local singleton = self._singletons[index]
+			if isvalid(singleton) and isvalid(singleton.ServerEnd) then
+				singleton:ServerEnd()
+			end
+		end
+	end
+
+	@ExecSpace("ServerOnly")
+	method void ServerUpdate(number delta)
+		if not self._server_started then
+			return
+		end
+		
+		local count = #self._singletons
+		for index = 1, count do
+			local singleton = self._singletons[index]
+			if isvalid(singleton) and isvalid(singleton.ServerUpdate) then
+				singleton:ServerUpdate(delta)
+			end
+		end
+	end
+
+	@ExecSpace("ClientOnly")
+	method void ClientStart()
+		local count = #self._singletons
+		for index = 1, count do
+			local singleton = self._singletons[index]
+			if isvalid(singleton) and isvalid(singleton.ClientStart) then
+				singleton:ClientStart()
+			end
+		end
+		
+		self._client_started = true
+	end
+
+	@ExecSpace("ClientOnly")
+	method void ClientEnd()
+		self._client_started = false
+		
+		local count = #self._singletons
+		for index = count, 1 , -1 do
+			local singleton = self._singletons[index]
+			if isvalid(singleton) and isvalid(singleton.ClientEnd) then
+				singleton:ClientEnd()
+			end
+		end
+	end
+
+	@ExecSpace("ClientOnly")
+	method void ClientUpdate(number delta)
+		if not self._client_started then
+			return
+		end
+		
+		local count = #self._singletons
+		for index = 1, count do
+			local singleton = self._singletons[index]
+			if isvalid(singleton) and isvalid(singleton.ClientUpdate) then
+				singleton:ClientUpdate(delta)
+			end
+		end
+	end
+
+	method void OnBeginPlay()
+		if self:IsServer() then
+			self:InitServerSingletons()
+			self:ServerStart()
+		else
+			self:InitClientSingletons()
+			self:ClientStart()
+		end
+	end
+
+	method void OnUpdate(number delta)
+		if self:IsServer() then
+			self:ServerUpdate(delta)
+		
+		else
+			self:ClientUpdate(delta)
+		end
+	end
+
+	method void OnEndPlay()
+		if self:IsServer() then
+			self:ServerEnd()
+		else
+			self:ClientEnd()
+		end
+	end
+
+end

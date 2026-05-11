@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sprite://7017217a973046b7ab7a7c7c70144a92",
+  "ContentType": "x-mod/sprite",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sprite/7017217a973046b7ab7a7c7c70144a92/639134745624414243",
+      "upload_hash": "D65235A802674058A349BC67FC9595A62FA186C60B4C7C73EC17F748434213D4",
+      "name": "BtOK_disabled_EN",
+      "resource_guid": "7017217a973046b7ab7a7c7c70144a92",
+      "resource_version": "69f843025c674862d152d7de"
+    }
+  }
+}

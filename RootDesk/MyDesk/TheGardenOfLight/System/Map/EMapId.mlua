@@ -1,0 +1,14 @@
+@Logic
+script EMapId extends IEnum
+
+	property integer ORBIS = 1
+
+	property integer GARDEN_OF_LIGHT = 2
+
+	method void Init()
+		self._nametable[self.ORBIS] = "ORBIS"
+		self._nametable[self.GARDEN_OF_LIGHT] = "GARDEN_OF_LIGHT"
+		self._initialized = true
+	end
+
+end

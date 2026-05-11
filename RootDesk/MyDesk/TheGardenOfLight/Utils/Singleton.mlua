@@ -1,0 +1,38 @@
+@Logic
+script Singleton extends Logic
+
+	property boolean _server_started = false
+
+	property boolean _client_started = false
+
+	@ExecSpace("ServerOnly")
+	method void ServerStart()
+		
+	end
+
+	@ExecSpace("ServerOnly")
+	method void ServerEnd()
+		
+	end
+
+	@ExecSpace("ServerOnly")
+	method void ServerUpdate(number delta)
+		
+	end
+
+	@ExecSpace("ClientOnly")
+	method void ClientStart()
+		
+	end
+
+	@ExecSpace("ClientOnly")
+	method void ClientEnd()
+		
+	end
+
+	@ExecSpace("ClientOnly")
+	method void ClientUpdate(number delta)
+		
+	end
+
+end

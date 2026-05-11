@@ -1,0 +1,28 @@
+@Struct
+script SSecurityResult
+
+	property boolean ok = false
+
+	property string reason = ""
+
+	property any value = nil
+
+	property boolean found = false
+
+	method void Init(boolean ok, string reason, table value, boolean found)
+		self.ok = ok == true
+		self.reason = reason
+		self.value = value
+		self.found = found == true
+	end
+
+	method table ToTable()
+		return {
+			ok = self.ok == true,
+			reason = self.reason,
+			value = self.value,
+			found = self.found == true
+		}
+	end
+
+end

@@ -1,0 +1,280 @@
+@Logic
+script Phase0BaselineTestRunner extends Logic
+
+	property integer Passed = 0
+
+	property integer Failed = 0
+
+	property table Failures = {}
+
+	property boolean LastRunSucceeded = false
+
+	property boolean Verbose = true
+
+	method void OnBeginPlay()
+		if not self:IsServer() then
+			return
+		end
+		
+		self.LastRunSucceeded = self:RunAll()
+	end
+
+	@ExecSpace("ServerOnly")
+	method boolean RunAll()
+		self.Passed = 0
+		self.Failed = 0
+		self.Failures = {}
+		
+		log("[Phase0BaselineTestRunner] start")
+		
+		self:_LogSection("constants")
+		self:_TestConstants()
+		self:_LogSection("clamp")
+		self:_TestClampLogic()
+		self:_LogSection("request validation")
+		self:_TestRequestValidationLogic()
+		self:_LogSection("localization")
+		self:_TestLocalizationLogic()
+		self:_LogSection("player state")
+		self:_TestPlayerStateFactory()
+		self:_LogSection("save payload validation")
+		self:_TestSavePayloadValidationLogic()
+		self:_LogSection("action log")
+		self:_TestActionLogManager()
+		
+		self:_LogResult()
+		
+		return self.Failed == 0
+	end
+
+	method table GetResult()
+		return {
+			passed = self.Passed,
+			failed = self.Failed,
+			failures = _CommonUtils:DeepCopyTable(self.Failures)
+		}
+	end
+
+	method void _TestConstants()
+		self:_AssertEqual("level min", _Constants.LEVEL_MIN, 1)
+		self:_AssertEqual("level max", _Constants.LEVEL_MAX, 20)
+		self:_AssertEqual("start meso", _Constants.START_MESO, 500)
+		self:_AssertEqual("autosave seconds", _Constants.AUTOSAVE_INTERVAL_SECONDS, 300)
+		self:_AssertEqual("move speed max", _Constants.MOVE_SPEED_MAX, 1.4)
+		self:_AssertEqual("jump power min", _Constants.JUMP_POWER_MIN, 0.75)
+		self:_AssertEqual("inventory capacity", _Constants.INVENTORY_CAPACITY, 40)
+		self:_AssertEqual("enum tostring", _EItemId:ToString(_EItemId.WOODEN_WAND), "WOODEN_WAND")
+		self:_AssertEqual("monster enum tostring", _EMonsterId:ToString(_EMonsterId.JUNIOR_CELLION), "JUNIOR_CELLION")
+		self:_AssertEqual("npc enum tostring", _ENpcId:ToString(_ENpcId.EDEL), "EDEL")
+		self:_AssertEqual("map enum tostring", _EMapId:ToString(_EMapId.ORBIS), "ORBIS")
+		self:_AssertEqual("skill enum tostring", _ESkillId:ToString(_ESkillId.MAGIC_CLAW), "MAGIC_CLAW")
+		self:_AssertEqual("admin enum tostring", _EAdminCommandId:ToString(_EAdminCommandId.ADD_MESO), "ADD_MESO")
+		self:_AssertEqual("action enum tostring", _EActionId:ToString(_EActionId.ITEM_GAIN), "ITEM_GAIN")
+	end
+
+	method void _TestClampLogic()
+		self:_AssertEqual("clamp level low", _ClampLogic:ClampLevel(-1), _Constants.LEVEL_MIN)
+		self:_AssertEqual("clamp level high", _ClampLogic:ClampLevel(99), _Constants.LEVEL_MAX)
+		self:_AssertEqual("clamp level fallback", _ClampLogic:ClampLevel("bad"), _Constants.START_LEVEL)
+		self:_AssertEqual("clamp meso low", _ClampLogic:ClampMeso(-10), _Constants.MESO_MIN)
+		self:_AssertEqual("clamp exp fallback", _ClampLogic:ClampExp("bad"), _Constants.START_EXP)
+		self:_AssertEqual("clamp count high", _ClampLogic:ClampItemCount(999999), _Constants.ITEM_COUNT_MAX)
+		self:_AssertEqual("clamp move high", _ClampLogic:ClampMoveSpeed(9.0), _Constants.MOVE_SPEED_MAX)
+		self:_AssertEqual("clamp jump low", _ClampLogic:ClampJumpPower(0.1), _Constants.JUMP_POWER_MIN)
+	end
+
+	method void _TestRequestValidationLogic()
+		self:_AssertTrue("valid item wooden wand", _RequestValidationLogic:IsValidItemId(_EItemId.WOODEN_WAND))
+		self:_AssertTrue("valid item solid horn", _RequestValidationLogic:IsValidItemId(_EItemId.SOLID_HORN))
+		self:_AssertFalse("invalid item", _RequestValidationLogic:IsValidItemId(999))
+		self:_AssertTrue("valid monster", _RequestValidationLogic:IsValidMonsterId(_EMonsterId.JUNIOR_CELLION))
+		self:_AssertFalse("invalid monster", _RequestValidationLogic:IsValidMonsterId(999))
+		self:_AssertTrue("valid npc", _RequestValidationLogic:IsValidNpcId(_ENpcId.EDEL))
+		self:_AssertFalse("invalid npc", _RequestValidationLogic:IsValidNpcId(999))
+		self:_AssertTrue("valid skill", _RequestValidationLogic:IsValidSkillId(_ESkillId.MAGIC_CLAW))
+		self:_AssertFalse("invalid skill", _RequestValidationLogic:IsValidSkillId(999))
+		self:_AssertTrue("valid count", _RequestValidationLogic:IsValidCount(1))
+		self:_AssertFalse("invalid count zero", _RequestValidationLogic:IsValidCount(0))
+		self:_AssertFalse("invalid count high", _RequestValidationLogic:IsValidCount(_Constants.ITEM_COUNT_MAX + 1))
+		self:_AssertTrue("valid language ko", _RequestValidationLogic:IsValidLanguage(_Constants.LANG_KO))
+		self:_AssertTrue("valid language en", _RequestValidationLogic:IsValidLanguage(_Constants.LANG_EN))
+		self:_AssertFalse("invalid language", _RequestValidationLogic:IsValidLanguage("jp"))
+	end
+
+	method void _TestLocalizationLogic()
+		self:_AssertEqual("item name key", _LocalizationLogic:GetItemNameKey(_EItemId.WOODEN_WAND), "item.1372005.name")
+		self:_AssertEqual("monster name key", _LocalizationLogic:GetMonsterNameKey(_EMonsterId.JUNIOR_CELLION), "monster.3210200.name")
+		self:_AssertEqual("npc name key", _LocalizationLogic:GetNpcNameKey(_ENpcId.EDEL), "npc.2012005.name")
+		self:_AssertEqual("map name key", _LocalizationLogic:GetMapNameKey("orbis"), "map.orbis")
+		self:_AssertEqual("ui key", _LocalizationLogic:GetUiKey("hud.meso"), "ui.hud.meso")
+		self:_AssertEqual("admin key", _LocalizationLogic:GetAdminMessageKey(_EAdminCommandId.ADD_MESO), "admin.f5.meso_add")
+		self:_AssertEqual("invalid admin key", _LocalizationLogic:GetAdminMessageKey(999), "")
+	end
+
+	method void _TestPlayerStateFactory()
+		local defaultState = _PlayerStateFactory:CreateDefaultState()
+		self:_AssertEqual("default level", defaultState.level, _Constants.START_LEVEL)
+		self:_AssertEqual("default exp", defaultState.exp, _Constants.START_EXP)
+		self:_AssertEqual("default meso", defaultState.meso, _Constants.START_MESO)
+		
+		local normalized = _PlayerStateFactory:NormalizeState({
+			level = 99,
+			exp = -10,
+			meso = -1,
+			equippedWeapon = 999,
+			language = "jp",
+			movementMultiplier = 99.0,
+			jumpMultiplier = 0.1,
+			adminFlashJump = true,
+			inventory = {
+				[_EItemId.SOLID_HORN] = _Constants.ITEM_COUNT_MAX + 1,
+				[_EItemId.WOODEN_WAND] = 1,
+				[999] = 10
+			}
+		})
+		
+		self:_AssertEqual("normalized level", normalized.level, _Constants.LEVEL_MAX)
+		self:_AssertEqual("normalized exp", normalized.exp, _Constants.EXP_MIN)
+		self:_AssertEqual("normalized meso", normalized.meso, _Constants.MESO_MIN)
+		self:_AssertEqual("normalized equipped invalid", normalized.equippedWeapon, _Constants.START_EQUIPPED_WEAPON)
+		self:_AssertEqual("normalized valid inventory", normalized.inventory[_EItemId.WOODEN_WAND], 1)
+		self:_AssertEqual("normalized rejected high stack", normalized.inventory[_EItemId.SOLID_HORN], nil)
+		self:_AssertEqual("normalized rejected invalid item", normalized.inventory[999], nil)
+	end
+
+	method void _TestSavePayloadValidationLogic()
+		local valid = _SavePayloadValidationLogic:ValidateAndNormalize({
+			level = 1,
+			exp = 0,
+			meso = 500,
+			equippedWeapon = 0,
+			language = _Constants.LANG_KO,
+			movementMultiplier = _Constants.MOVE_SPEED_DEFAULT,
+			jumpMultiplier = _Constants.JUMP_POWER_DEFAULT,
+			adminFlashJump = false,
+			inventory = {
+				[_EItemId.WOODEN_WAND] = 1
+			}
+		})
+		self:_AssertTrue("save payload valid", valid.ok)
+		self:_AssertEqual("save payload valid level", valid.value.level, 1)
+		self:_AssertEqual("save payload valid table reason", valid:ToTable().reason, "")
+		
+		local notTable = _SavePayloadValidationLogic:ValidateAndNormalize("bad")
+		self:_AssertFalse("save payload non table denied", notTable.ok)
+		self:_AssertEqual("save payload non table reason", notTable.reason, "payload_not_table")
+		self:_AssertEqual("save payload non table fallback", notTable.value.level, _Constants.START_LEVEL)
+		
+		local invalidLevel = _SavePayloadValidationLogic:ValidateAndNormalize({
+			level = 99,
+			exp = 0,
+			meso = 500,
+			inventory = {}
+		})
+		self:_AssertFalse("save payload invalid level denied", invalidLevel.ok)
+		self:_AssertEqual("save payload invalid level reason", invalidLevel.reason, "invalid_level")
+		self:_AssertEqual("save payload invalid level normalized", invalidLevel.value.level, _Constants.LEVEL_MAX)
+		
+		local invalidInventory = _SavePayloadValidationLogic:ValidateAndNormalize({
+			level = 1,
+			exp = 0,
+			meso = 500,
+			inventory = {
+				[999] = 1
+			}
+		})
+		self:_AssertFalse("save payload invalid item denied", invalidInventory.ok)
+		self:_AssertEqual("save payload invalid item reason", invalidInventory.reason, "invalid_inventory_item")
+	end
+
+	method void _TestActionLogManager()
+		_ActionLogManager:ClearBuffer()
+		_ActionLogManager:Write(_EActionId.ITEM_GAIN, {
+			userId = "12345678901234567",
+			itemId = _EItemId.SOLID_HORN,
+			amount = 3,
+			result = "ok"
+		})
+		_ActionLogManager:WriteSecurityFailure("12345678901234567", "bad sender")
+		
+		local entries = _ActionLogManager:GetBufferedEntries()
+		self:_AssertEqual("log entry count", #entries, 2)
+		self:_AssertEqual("log action item gain", entries[1].actionId, _EActionId.ITEM_GAIN)
+		self:_AssertEqual("log item id", entries[1].itemId, _EItemId.SOLID_HORN)
+		self:_AssertEqual("log security action", entries[2].actionId, _EActionId.SECURITY_FAILURE)
+		self:_AssertEqual("log security result", entries[2].result, "deny")
+	end
+
+	method void _AssertTrue(string name, boolean actual)
+		if actual == true then
+			self.Passed = self.Passed + 1
+			self:_LogPass(name)
+			return
+		end
+		
+		self:_Fail(name, "true", tostring(actual))
+	end
+
+	method void _AssertFalse(string name, boolean actual)
+		if actual == false then
+			self.Passed = self.Passed + 1
+			self:_LogPass(name)
+			return
+		end
+		
+		self:_Fail(name, "false", tostring(actual))
+	end
+
+	method void _AssertEqual(string name, any actual, any expected)
+		if actual == expected then
+			self.Passed = self.Passed + 1
+			self:_LogPass(name)
+			return
+		end
+		
+		self:_Fail(name, tostring(expected), tostring(actual))
+	end
+
+	method void _Fail(string name, string expected, string actual)
+		self.Failed = self.Failed + 1
+		table.insert(self.Failures, {
+			name = name,
+			expected = expected,
+			actual = actual
+		})
+		log("[Phase0BaselineTestRunner] FAIL_ASSERT name=" .. name .. " expected=" .. expected .. " actual=" .. actual)
+	end
+
+	method void _LogSection(string name)
+		if not self.Verbose then
+			return
+		end
+		
+		log("[Phase0BaselineTestRunner] section=" .. name)
+	end
+
+	method void _LogPass(string name)
+		if not self.Verbose then
+			return
+		end
+		
+		log("[Phase0BaselineTestRunner] PASS_ASSERT name=" .. name)
+	end
+
+	method void _LogResult()
+		if self.Failed == 0 then
+			log("[Phase0BaselineTestRunner] PASS passed=" .. tostring(self.Passed) .. " failed=0")
+			return
+		end
+		
+		log("[Phase0BaselineTestRunner] FAIL passed=" .. tostring(self.Passed) .. " failed=" .. tostring(self.Failed))
+		
+		for index, failure in ipairs(self.Failures) do
+			log("[Phase0BaselineTestRunner] failure #" .. tostring(index)
+			.. " name=" .. tostring(failure.name)
+			.. " expected=" .. tostring(failure.expected)
+			.. " actual=" .. tostring(failure.actual))
+		end
+	end
+
+end

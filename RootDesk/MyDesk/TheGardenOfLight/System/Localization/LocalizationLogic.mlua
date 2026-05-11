@@ -1,0 +1,114 @@
+@Logic
+script LocalizationLogic extends Logic
+
+	method string GetItemNameKey(integer itemId)
+		return "item." .. tostring(itemId) .. ".name"
+	end
+
+	method string GetMonsterNameKey(integer monsterId)
+		return "monster." .. tostring(monsterId) .. ".name"
+	end
+
+	method string GetNpcNameKey(integer npcId)
+		return "npc." .. tostring(npcId) .. ".name"
+	end
+
+	method string GetMapNameKey(string mapCode)
+		return "map." .. tostring(mapCode)
+	end
+
+	method string GetUiKey(string path)
+		return "ui." .. tostring(path)
+	end
+
+	method string GetAdminMessageKey(integer commandId)
+		if commandId == _EAdminCommandId.MOVE_SPEED_UP then
+			return "admin.f1.move_up"
+		end
+		
+		if commandId == _EAdminCommandId.MOVE_SPEED_DOWN then
+			return "admin.f2.move_down"
+		end
+		
+		if commandId == _EAdminCommandId.JUMP_POWER_UP then
+			return "admin.f3.jump_up"
+		end
+		
+		if commandId == _EAdminCommandId.JUMP_POWER_DOWN then
+			return "admin.f4.jump_down"
+		end
+		
+		if commandId == _EAdminCommandId.ADD_MESO then
+			return "admin.f5.meso_add"
+		end
+		
+		if commandId == _EAdminCommandId.CLEAR_MESO then
+			return "admin.f6.meso_zero"
+		end
+		
+		if commandId == _EAdminCommandId.RESET_DATA then
+			return "admin.f7.reset"
+		end
+		
+		if commandId == _EAdminCommandId.KILL_ALL_MONSTERS then
+			return "admin.f8.kill_all"
+		end
+		
+		if commandId == _EAdminCommandId.ADD_LEVEL then
+			return "admin.f9.level_up"
+		end
+		
+		if commandId == _EAdminCommandId.ADD_EXP then
+			return "admin.f10.exp_add"
+		end
+		
+		if commandId == _EAdminCommandId.FLASH_JUMP_ON then
+			return "admin.f11.flash_jump_on"
+		end
+		
+		if commandId == _EAdminCommandId.FLASH_JUMP_OFF then
+			return "admin.f12.flash_jump_off"
+		end
+		
+		return ""
+	end
+
+	@ExecSpace("ClientOnly")
+	method string GetText(string key)
+		if _UtilLogic:IsNilorEmptyString(key) then
+			return ""
+		end
+		
+		local text = _LocalizationService:GetText(key)
+		if _UtilLogic:IsNilorEmptyString(text) then
+			return key
+		end
+		
+		return text
+	end
+
+	@ExecSpace("ClientOnly")
+	method string GetTextForLocale(string localeId, string key)
+		if _UtilLogic:IsNilorEmptyString(localeId) or _UtilLogic:IsNilorEmptyString(key) then
+			return ""
+		end
+		
+		local translator = _LocalizationService:GetTranslatorForLocale(localeId)
+		if not isvalid(translator) then
+			return key
+		end
+		
+		local text = translator:GetText(key)
+		if _UtilLogic:IsNilorEmptyString(text) then
+			return key
+		end
+		
+		return text
+	end
+
+	@ExecSpace("ClientOnly")
+	method string GetCurrentLocaleId()
+		return _LocalizationService.CurrentLocaleId
+	end
+
+end

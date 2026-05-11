@@ -1,0 +1,38 @@
+@Logic
+script EActionId extends IEnum
+
+	property integer ITEM_BUY = 1001
+
+	property integer ITEM_SELL = 1002
+
+	property integer MESO_CHANGE = 1003
+
+	property integer ITEM_GAIN = 1004
+
+	property integer LEVEL_UP = 1005
+
+	property integer MONSTER_KILL = 1006
+
+	property integer MAP_MOVE = 1007
+
+	property integer DATA_SAVE = 1008
+
+	property integer ADMIN_COMMAND = 1009
+
+	property integer SECURITY_FAILURE = 1010
+
+	method void Init()
+		self._nametable[self.ITEM_BUY] = "ITEM_BUY"
+		self._nametable[self.ITEM_SELL] = "ITEM_SELL"
+		self._nametable[self.MESO_CHANGE] = "MESO_CHANGE"
+		self._nametable[self.ITEM_GAIN] = "ITEM_GAIN"
+		self._nametable[self.LEVEL_UP] = "LEVEL_UP"
+		self._nametable[self.MONSTER_KILL] = "MONSTER_KILL"
+		self._nametable[self.MAP_MOVE] = "MAP_MOVE"
+		self._nametable[self.DATA_SAVE] = "DATA_SAVE"
+		self._nametable[self.ADMIN_COMMAND] = "ADMIN_COMMAND"
+		self._nametable[self.SECURITY_FAILURE] = "SECURITY_FAILURE"
+		self._initialized = true
+	end
+
+end

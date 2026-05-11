@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sprite://c9b4f37f3247468f832f2d787213c24c",
+  "ContentType": "x-mod/sprite",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sprite/c9b4f37f3247468f832f2d787213c24c/639134794329886477",
+      "upload_hash": "F1722DE91DA90C7529FC59AB6862B95CFFC3F651567B2F5D43FF83904B6C7B19",
+      "name": "1382017_Icon",
+      "resource_guid": "c9b4f37f3247468f832f2d787213c24c",
+      "resource_version": "69f856083b0b401fa713bc4e"
+    }
+  }
+}

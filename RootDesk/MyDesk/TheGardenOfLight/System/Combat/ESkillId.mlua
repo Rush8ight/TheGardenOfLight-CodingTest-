@@ -1,0 +1,20 @@
+@Logic
+script ESkillId extends IEnum
+
+	property integer MAGIC_CLAW = 1001
+
+	property integer ICE_TEMPEST = 1002
+
+	property integer FIRE_ARROW = 1003
+
+	property integer ANGEL_RAY = 1004
+
+	method void Init()
+		self._nametable[self.MAGIC_CLAW] = "MAGIC_CLAW"
+		self._nametable[self.ICE_TEMPEST] = "ICE_TEMPEST"
+		self._nametable[self.FIRE_ARROW] = "FIRE_ARROW"
+		self._nametable[self.ANGEL_RAY] = "ANGEL_RAY"
+		self._initialized = true
+	end
+
+end

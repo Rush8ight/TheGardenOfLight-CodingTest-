@@ -1,0 +1,74 @@
+@Logic
+script RequestValidationLogic extends Logic
+
+	method boolean IsValidUserId(string userId)
+		return _CommonUtils:IsValidUserId(userId)
+	end
+
+	method boolean IsSenderUserId(string senderId, string expectedUserId)
+		if not self:IsValidUserId(senderId) then
+			return false
+		end
+		
+		if not self:IsValidUserId(expectedUserId) then
+			return false
+		end
+		
+		return senderId == expectedUserId
+	end
+
+	method boolean IsValidItemId(integer itemId)
+		return itemId == _EItemId.WOODEN_WAND
+		or itemId == _EItemId.WIZARD_WAND
+		or itemId == _EItemId.WIZARD_STAFF
+		or itemId == _EItemId.CIRCLE_WINDED_STAFF
+		or itemId == _EItemId.SOLID_HORN
+	end
+
+	method boolean IsValidMonsterId(integer monsterId)
+		return monsterId == _EMonsterId.JUNIOR_CELLION
+		or monsterId == _EMonsterId.JUNIOR_LIONER
+		or monsterId == _EMonsterId.JUNIOR_GRUPIN
+	end
+
+	method boolean IsValidNpcId(integer npcId)
+		return npcId == _ENpcId.EDEL
+		or npcId == _ENpcId.KRIEL
+	end
+
+	method boolean IsValidSkillId(integer skillId)
+		return skillId == _ESkillId.MAGIC_CLAW
+		or skillId == _ESkillId.ICE_TEMPEST
+		or skillId == _ESkillId.FIRE_ARROW
+		or skillId == _ESkillId.ANGEL_RAY
+	end
+
+	method boolean IsValidCount(any count)
+		if not _CommonUtils:IsValidCount(count) then
+			return false
+		end
+		
+		return count <= _Constants.ITEM_COUNT_MAX
+	end
+
+	method boolean IsValidMeso(any meso)
+		if not _CommonUtils:IsNonNegativeInteger(meso) then
+			return false
+		end
+		
+		return meso <= _Constants.MESO_MAX
+	end
+
+	method boolean IsValidLevel(any level)
+		if not _CommonUtils:IsInteger(level) then
+			return false
+		end
+		
+		return level >= _Constants.LEVEL_MIN and level <= _Constants.LEVEL_MAX
+	end
+
+	method boolean IsValidLanguage(string language)
+		return language == _Constants.LANG_KO or language == _Constants.LANG_EN
+	end
+
+end

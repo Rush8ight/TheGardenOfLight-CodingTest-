@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sprite://f96f335245444205ba0487b84c18a1d1",
+  "ContentType": "x-mod/sprite",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sprite/f96f335245444205ba0487b84c18a1d1/639134745624318647",
+      "upload_hash": "B2762C8BF5B3B3FFCE96B6CBB7087C9D4E2AD6A049F5BEF914D441B72063902F",
+      "name": "BtCancel_normal_EN",
+      "resource_guid": "f96f335245444205ba0487b84c18a1d1",
+      "resource_version": "69f843028452654132f892ff"
+    }
+  }
+}

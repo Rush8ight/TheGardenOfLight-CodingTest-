@@ -1,0 +1,17 @@
+@Logic
+script EMonsterId extends IEnum
+
+	property integer JUNIOR_CELLION = 3210200
+
+	property integer JUNIOR_LIONER = 3210201
+
+	property integer JUNIOR_GRUPIN = 3210202
+
+	method void Init()
+		self._nametable[self.JUNIOR_CELLION] = "JUNIOR_CELLION"
+		self._nametable[self.JUNIOR_LIONER] = "JUNIOR_LIONER"
+		self._nametable[self.JUNIOR_GRUPIN] = "JUNIOR_GRUPIN"
+		self._initialized = true
+	end
+
+end

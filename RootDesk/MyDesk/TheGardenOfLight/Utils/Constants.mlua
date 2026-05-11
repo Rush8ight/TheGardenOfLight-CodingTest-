@@ -1,0 +1,58 @@
+@Logic
+script Constants extends Logic
+
+	property integer LEVEL_MIN = 1
+
+	property integer LEVEL_MAX = 20
+
+	property integer START_LEVEL = 1
+
+	property integer START_EXP = 0
+
+	property integer START_MESO = 500
+
+	property integer START_EQUIPPED_WEAPON = 0
+
+	property integer AUTOSAVE_INTERVAL_SECONDS = 300
+
+	property string PLAYER_STATE_STORAGE_KEY = "player_state_v1"
+
+	property integer INVENTORY_CAPACITY = 40
+
+	property integer ITEM_COUNT_MIN = 1
+
+	property integer ITEM_COUNT_MAX = 2500
+
+	property integer MESO_MIN = 0
+
+	property integer MESO_MAX = 2147483647
+
+	property integer EXP_MIN = 0
+
+	property integer EXP_MAX = 2147483647
+
+	property integer DAMAGE_MIN = 0
+
+	property integer DAMAGE_MAX = 999999
+
+	property number MOVE_SPEED_DEFAULT = 1.0
+
+	property number MOVE_SPEED_MIN = 0.8
+
+	property number MOVE_SPEED_MAX = 1.4
+
+	property number MOVE_SPEED_STEP = 0.1
+
+	property number JUMP_POWER_DEFAULT = 1.0
+
+	property number JUMP_POWER_MIN = 0.75
+
+	property number JUMP_POWER_MAX = 1.25
+
+	property number JUMP_POWER_STEP = 0.05
+
+	property string LANG_KO = "ko"
+
+	property string LANG_EN = "en"
+
+end

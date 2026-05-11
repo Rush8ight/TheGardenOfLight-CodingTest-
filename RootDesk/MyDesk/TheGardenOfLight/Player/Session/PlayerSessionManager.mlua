@@ -1,0 +1,189 @@
+@Logic
+script PlayerSessionManager extends Singleton
+
+	property table _states = {}
+
+	property table _eventHandlers = {}
+
+	property integer _autosaveTimerId = 0
+
+	property boolean _started = false
+
+	@ExecSpace("ServerOnly")
+	method void ServerStart()
+		if self._started then
+			return
+		end
+		
+		self._started = true
+		self:_ConnectUserEvents()
+		self:_LoadConnectedUsers()
+		self:_StartAutosave()
+	end
+
+	@ExecSpace("ServerOnly")
+	method void ServerEnd()
+		if not self._started then
+			return
+		end
+		
+		self:_StopAutosave()
+		self:_SaveAllStates()
+		self:_DisconnectUserEvents()
+		
+		self._started = false
+	end
+
+	@ExecSpace("ServerOnly")
+	method table GetState(string userId)
+		return _CommonUtils:DeepCopyTable(self:_EnsureState(userId))
+	end
+
+	@ExecSpace("ServerOnly")
+	method void SetState(string userId, table state)
+		if not _RequestValidationLogic:IsValidUserId(userId) then
+			return
+		end
+		
+		self._states[userId] = _PlayerStateFactory:NormalizeState(state)
+	end
+
+	@ExecSpace("ServerOnly")
+	method void ResetState(string userId)
+		if not _RequestValidationLogic:IsValidUserId(userId) then
+			return
+		end
+		
+		self._states[userId] = _PlayerStateFactory:CreateDefaultState()
+	end
+
+	@ExecSpace("ServerOnly")
+	method SSecurityResult SaveState(string userId)
+		local state = self:_EnsureState(userId)
+		local result = _PlayerSaveRepository:SaveUserState(userId, state)
+		if result.ok then
+			_ActionLogManager:Write(_EActionId.DATA_SAVE, {
+				userId = userId,
+				result = "ok"
+			})
+		end
+		
+		return result
+	end
+
+	@ExecSpace("ServerOnly")
+	method void _ConnectUserEvents()
+		if self._eventHandlers.userEnter ~= nil or self._eventHandlers.userLeave ~= nil then
+			return
+		end
+		
+		self._eventHandlers.userEnter = _UserService:ConnectEvent(UserEnterEvent, function(event)
+			self:_HandleUserEnter(event)
+		end)
+		self._eventHandlers.userLeave = _UserService:ConnectEvent(UserLeaveEvent, function(event)
+			self:_HandleUserLeave(event)
+		end)
+	end
+
+	@ExecSpace("ServerOnly")
+	method void _DisconnectUserEvents()
+		if self._eventHandlers.userEnter ~= nil then
+			_UserService:DisconnectEvent(UserEnterEvent, self._eventHandlers.userEnter)
+			self._eventHandlers.userEnter = nil
+		end
+		
+		if self._eventHandlers.userLeave ~= nil then
+			_UserService:DisconnectEvent(UserLeaveEvent, self._eventHandlers.userLeave)
+			self._eventHandlers.userLeave = nil
+		end
+	end
+
+	@ExecSpace("ServerOnly")
+	method void _LoadConnectedUsers()
+		if not isvalid(_UserService.Users) then
+			return
+		end
+		
+		local users = _UserService.Users:ToTable()
+		for userId, _ in pairs(users) do
+			self:_LoadAndCacheState(userId)
+		end
+	end
+
+	@ExecSpace("ServerOnly")
+	method void _HandleUserEnter(UserEnterEvent event)
+		if event == nil or not _RequestValidationLogic:IsValidUserId(event.UserId) then
+			return
+		end
+		
+		self:_LoadAndCacheState(event.UserId)
+	end
+
+	@ExecSpace("ServerOnly")
+	method void _HandleUserLeave(UserLeaveEvent event)
+		if event == nil or not _RequestValidationLogic:IsValidUserId(event.UserId) then
+			return
+		end
+		
+		self:SaveState(event.UserId)
+		self._states[event.UserId] = nil
+	end
+
+	@ExecSpace("ServerOnly")
+	method table _EnsureState(string userId)
+		local state = self._states[userId]
+		if state ~= nil then
+			return state
+		end
+		
+		return self:_LoadAndCacheState(userId)
+	end
+
+	@ExecSpace("ServerOnly")
+	method table _LoadAndCacheState(string userId)
+		local result = _PlayerSaveRepository:LoadUserState(userId)
+		self._states[userId] = _CommonUtils:DeepCopyTable(result.value)
+		
+		if result.found and not result.ok then
+			_ActionLogManager:WriteSecurityFailure(userId, result.reason)
+		end
+		
+		return self._states[userId]
+	end
+
+	@ExecSpace("ServerOnly")
+	method void _SaveAllStates()
+		for userId, state in pairs(self._states) do
+			if _RequestValidationLogic:IsValidUserId(userId) then
+				_PlayerSaveRepository:SaveUserState(userId, state)
+			end
+		end
+	end
+
+	@ExecSpace("ServerOnly")
+	method void _StartAutosave()
+		if self._autosaveTimerId ~= 0 then
+			return
+		end
+		
+		self._autosaveTimerId = _TimerService:SetTimerRepeat(function()
+			self:_OnAutosaveTick()
+		end, _Constants.AUTOSAVE_INTERVAL_SECONDS, _Constants.AUTOSAVE_INTERVAL_SECONDS)
+	end
+
+	@ExecSpace("ServerOnly")
+	method void _StopAutosave()
+		if self._autosaveTimerId == 0 then
+			return
+		end
+		
+		_TimerService:ClearTimer(self._autosaveTimerId)
+		self._autosaveTimerId = 0
+	end
+
+	@ExecSpace("ServerOnly")
+	method void _OnAutosaveTick()
+		self:_SaveAllStates()
+	end
+
+end

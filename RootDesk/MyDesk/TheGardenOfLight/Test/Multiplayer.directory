@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "directory://5dadc8cd7b644363a8ecee8a7f54a8b7",
+  "ContentType": "x-mod/directory",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "entry_id": "directory://5dadc8cd7b644363a8ecee8a7f54a8b7",
+      "name": "Multiplayer",
+      "lock": false,
+      "folding": false,
+      "nameEditable": true
+    }
+  }
+}

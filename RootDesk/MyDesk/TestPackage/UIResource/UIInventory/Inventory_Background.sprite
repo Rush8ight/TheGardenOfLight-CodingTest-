@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sprite://532af77ff89a43e9b261df950462c6d0",
+  "ContentType": "x-mod/sprite",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sprite/532af77ff89a43e9b261df950462c6d0/639134721772842715",
+      "upload_hash": "5E41D506B3FD4CE570468AADF13E3ED6F0E064F343AB318AC735892A413FE0F5",
+      "name": "Inventory_Background",
+      "resource_guid": "532af77ff89a43e9b261df950462c6d0",
+      "resource_version": "69f839b11c21db9d37dcd640"
+    }
+  }
+}

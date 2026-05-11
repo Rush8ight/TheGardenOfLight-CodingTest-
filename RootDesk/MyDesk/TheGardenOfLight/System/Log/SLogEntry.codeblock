@@ -1,0 +1,33 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "codeblock://5bdd3f45-ca38-4d8c-b1a3-9b56d90ea3f2",
+  "ContentType": "x-mod/codeblock",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "CoreVersion": {
+        "Major": 0,
+        "Minor": 2
+      },
+      "ScriptVersion": {
+        "Major": 1,
+        "Minor": 1
+      },
+      "Description": "",
+      "Id": "5bdd3f45-ca38-4d8c-b1a3-9b56d90ea3f2",
+      "Language": 1,
+      "Name": "SLogEntry",
+      "Type": 9,
+      "Source": 0,
+      "Target": null
+    }
+  }
+}

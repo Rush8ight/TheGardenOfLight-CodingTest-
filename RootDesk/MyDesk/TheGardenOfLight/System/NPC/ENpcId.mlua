@@ -1,0 +1,14 @@
+@Logic
+script ENpcId extends IEnum
+
+	property integer EDEL = 2012005
+
+	property integer KRIEL = 2012011
+
+	method void Init()
+		self._nametable[self.EDEL] = "EDEL"
+		self._nametable[self.KRIEL] = "KRIEL"
+		self._initialized = true
+	end
+
+end

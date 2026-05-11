@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sound://c6dc9f0f5ca04f8da20e834005aed93a",
+  "ContentType": "x-mod/sound",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sound/c6dc9f0f5ca04f8da20e834005aed93a/639134721780686170",
+      "upload_hash": "F8DE8948855B5E9DBC42847167054DF421E737484FC9CFB210FCE8A719A68D2D",
+      "name": "BtMouseClick",
+      "resource_guid": "c6dc9f0f5ca04f8da20e834005aed93a",
+      "resource_version": "69f839b2354d4eb86f678604"
+    }
+  }
+}

@@ -1,0 +1,75 @@
+@Logic
+script PlayerSaveRepository extends Logic
+
+	method string GetStorageKey()
+		return _Constants.PLAYER_STATE_STORAGE_KEY
+	end
+
+	@ExecSpace("ServerOnly")
+	method SSecurityResult LoadUserState(string userId)
+		local defaultState = _PlayerStateFactory:CreateDefaultState()
+		if not _RequestValidationLogic:IsValidUserId(userId) then
+			return self:_CreateResult(false, "invalid_user_id", defaultState, false)
+		end
+		
+		local storage = _DataStorageService:GetUserDataStorage(userId)
+		if not isvalid(storage) then
+			return self:_CreateResult(false, "storage_unavailable", defaultState, false)
+		end
+		
+		local errorCode, raw = storage:GetAndWait(self:GetStorageKey())
+		if errorCode ~= 0 or _UtilLogic:IsNilorEmptyString(raw) then
+			return self:_CreateResult(true, "", defaultState, false)
+		end
+		
+		local decoded = self:_DecodeJson(raw)
+		if decoded == nil then
+			return self:_CreateResult(false, "invalid_json", defaultState, true)
+		end
+		
+		local validated = _SavePayloadValidationLogic:ValidateAndNormalize(decoded)
+		return self:_CreateResult(validated.ok, validated.reason, validated.value, true)
+	end
+
+	@ExecSpace("ServerOnly")
+	method SSecurityResult SaveUserState(string userId, table state)
+		local defaultState = _PlayerStateFactory:CreateDefaultState()
+		local validated = _SavePayloadValidationLogic:ValidateAndNormalize(state)
+		
+		if not _RequestValidationLogic:IsValidUserId(userId) then
+			return self:_CreateResult(false, "invalid_user_id", defaultState, false)
+		end
+		
+		local storage = _DataStorageService:GetUserDataStorage(userId)
+		if not isvalid(storage) then
+			return self:_CreateResult(false, "storage_unavailable", validated.value, true)
+		end
+		
+		local encoded = _HttpService:JSONEncode(validated.value)
+		local errorCode = storage:SetAndWait(self:GetStorageKey(), encoded)
+		if errorCode ~= 0 then
+			return self:_CreateResult(false, "storage_write_failed", validated.value, true)
+		end
+		
+		return self:_CreateResult(validated.ok, validated.reason, validated.value, true)
+	end
+
+	method SSecurityResult _CreateResult(boolean ok, string reason, SPlayerState state, boolean found)
+		local result = SSecurityResult()
+		result:Init(ok, reason, state:ToTable(), found)
+		return result
+	end
+
+	method table _DecodeJson(string raw)
+		local ok, decoded = pcall(function()
+			return _HttpService:JSONDecode(raw)
+		end)
+		
+		if not ok or type(decoded) ~= "table" then
+			return nil
+		end
+		
+		return decoded
+	end
+
+end

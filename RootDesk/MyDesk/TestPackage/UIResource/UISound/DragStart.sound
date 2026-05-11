@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sound://e274d89d748c48acb6b25de2122f4262",
+  "ContentType": "x-mod/sound",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sound/e274d89d748c48acb6b25de2122f4262/639134721780672390",
+      "upload_hash": "FCCD5C805A2B5C2E67C3143152DEA7855D5FD4AD7EC7966264F1CEAFD3168E43",
+      "name": "DragStart",
+      "resource_guid": "e274d89d748c48acb6b25de2122f4262",
+      "resource_version": "69f839b2503592e4f726eeae"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "directory://f9fac9eb9a814e119d56c5faaa0b5aad",
+  "ContentType": "x-mod/directory",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "entry_id": "directory://f9fac9eb9a814e119d56c5faaa0b5aad",
+      "name": "Log",
+      "lock": false,
+      "folding": false,
+      "nameEditable": true
+    }
+  }
+}

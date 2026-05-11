@@ -1,0 +1,44 @@
+@Logic
+script EAdminCommandId extends IEnum
+
+	property integer MOVE_SPEED_UP = 1
+
+	property integer MOVE_SPEED_DOWN = 2
+
+	property integer JUMP_POWER_UP = 3
+
+	property integer JUMP_POWER_DOWN = 4
+
+	property integer ADD_MESO = 5
+
+	property integer CLEAR_MESO = 6
+
+	property integer RESET_DATA = 7
+
+	property integer KILL_ALL_MONSTERS = 8
+
+	property integer ADD_LEVEL = 9
+
+	property integer ADD_EXP = 10
+
+	property integer FLASH_JUMP_ON = 11
+
+	property integer FLASH_JUMP_OFF = 12
+
+	method void Init()
+		self._nametable[self.MOVE_SPEED_UP] = "MOVE_SPEED_UP"
+		self._nametable[self.MOVE_SPEED_DOWN] = "MOVE_SPEED_DOWN"
+		self._nametable[self.JUMP_POWER_UP] = "JUMP_POWER_UP"
+		self._nametable[self.JUMP_POWER_DOWN] = "JUMP_POWER_DOWN"
+		self._nametable[self.ADD_MESO] = "ADD_MESO"
+		self._nametable[self.CLEAR_MESO] = "CLEAR_MESO"
+		self._nametable[self.RESET_DATA] = "RESET_DATA"
+		self._nametable[self.KILL_ALL_MONSTERS] = "KILL_ALL_MONSTERS"
+		self._nametable[self.ADD_LEVEL] = "ADD_LEVEL"
+		self._nametable[self.ADD_EXP] = "ADD_EXP"
+		self._nametable[self.FLASH_JUMP_ON] = "FLASH_JUMP_ON"
+		self._nametable[self.FLASH_JUMP_OFF] = "FLASH_JUMP_OFF"
+		self._initialized = true
+	end
+
+end

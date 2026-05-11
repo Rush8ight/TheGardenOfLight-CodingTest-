@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sprite://4be25baba9e4409387becb1e96d92b3e",
+  "ContentType": "x-mod/sprite",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sprite/4be25baba9e4409387becb1e96d92b3e/639134721783926506",
+      "upload_hash": "B0DC34C8A3C58FACBFE833691E66756C1B5B4BD94B961DA0CDF84CE044007754",
+      "name": "BtCancel_mouseOver",
+      "resource_guid": "4be25baba9e4409387becb1e96d92b3e",
+      "resource_version": "69f843025c674862d152d7df"
+    }
+  }
+}

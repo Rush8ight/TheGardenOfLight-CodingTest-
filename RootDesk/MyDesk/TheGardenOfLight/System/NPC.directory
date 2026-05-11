@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "directory://a73e19d74001439aa7c9e3c5df05e50f",
+  "ContentType": "x-mod/directory",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "entry_id": "directory://a73e19d74001439aa7c9e3c5df05e50f",
+      "name": "NPC",
+      "lock": false,
+      "folding": false,
+      "nameEditable": true
+    }
+  }
+}

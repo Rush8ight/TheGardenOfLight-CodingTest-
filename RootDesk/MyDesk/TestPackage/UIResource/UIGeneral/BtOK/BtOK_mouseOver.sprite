@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sprite://74b2bce4595f42b7a42b509bd51a36d7",
+  "ContentType": "x-mod/sprite",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sprite/74b2bce4595f42b7a42b509bd51a36d7/639134721783758105",
+      "upload_hash": "D86776DC2F20BC36A5FA449079DA712E947D7C9213664CD098A13B96882F9172",
+      "name": "BtOK_mouseOver",
+      "resource_guid": "74b2bce4595f42b7a42b509bd51a36d7",
+      "resource_version": "69f843034c6d3eff1cbf5d34"
+    }
+  }
+}

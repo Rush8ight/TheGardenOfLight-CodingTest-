@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sprite://d2805538cd994ae2abe873f71daf2ae6",
+  "ContentType": "x-mod/sprite",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sprite/d2805538cd994ae2abe873f71daf2ae6/639134721772932837",
+      "upload_hash": "B6B88D82B87EFE3A70AC9D443A8C8B35E1BDC4BA4D12AAD29350E4D984C1A955",
+      "name": "BtClose_mouseOver",
+      "resource_guid": "d2805538cd994ae2abe873f71daf2ae6",
+      "resource_version": "69f839b13b0b401fa713bc48"
+    }
+  }
+}

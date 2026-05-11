@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "directory://d5bfdfeee1464eb79bd04a31923d4260",
+  "ContentType": "x-mod/directory",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "entry_id": "directory://d5bfdfeee1464eb79bd04a31923d4260",
+      "name": "Scroll",
+      "lock": false,
+      "folding": false,
+      "nameEditable": true
+    }
+  }
+}

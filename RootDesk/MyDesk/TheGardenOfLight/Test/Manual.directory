@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "directory://297e41ef6f10449da136c7e9bb6656ed",
+  "ContentType": "x-mod/directory",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "entry_id": "directory://297e41ef6f10449da136c7e9bb6656ed",
+      "name": "Manual",
+      "lock": false,
+      "folding": false,
+      "nameEditable": true
+    }
+  }
+}

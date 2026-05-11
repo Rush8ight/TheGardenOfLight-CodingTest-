@@ -1,0 +1,36 @@
+@Struct
+script SPlayerState
+
+	property integer level = 1
+
+	property integer exp = 0
+
+	property integer meso = 500
+
+	property table inventory = {}
+
+	property integer equippedWeapon = 0
+
+	property boolean isAdmin = false
+
+	method void Init(integer level, integer exp, integer meso, table inventory, integer equippedWeapon, boolean isAdmin)
+		self.level = level
+		self.exp = exp
+		self.meso = meso
+		self.inventory = inventory
+		self.equippedWeapon = equippedWeapon
+		self.isAdmin = isAdmin
+	end
+
+	method table ToTable()
+		return {
+			level = self.level,
+			exp = self.exp,
+			meso = self.meso,
+			inventory = self.inventory,
+			equippedWeapon = self.equippedWeapon,
+			isAdmin = self.isAdmin
+		}
+	end
+
+end

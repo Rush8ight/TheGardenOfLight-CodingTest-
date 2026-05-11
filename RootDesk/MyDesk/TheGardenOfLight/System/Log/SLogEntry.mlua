@@ -1,0 +1,60 @@
+@Struct
+script SLogEntry
+
+	property integer actionId = 0
+
+	property string userId = ""
+
+	property string targetUserId = ""
+
+	property string mapName = ""
+
+	property integer itemId = 0
+
+	property integer monsterId = 0
+
+	property integer amount = 0
+
+	property any beforeValue = nil
+
+	property any afterValue = nil
+
+	property string result = ""
+
+	property string reason = ""
+
+	method table Init()
+		local entry = {
+			actionId = 0,
+			userId = "",
+			targetUserId = "",
+			mapName = "",
+			itemId = 0,
+			monsterId = 0,
+			amount = 0,
+			beforeValue = nil,
+			afterValue = nil,
+			result = "",
+			reason = ""
+		}
+		
+		return setmetatable(entry, { __index = self })
+	end
+
+	method table ToTable()
+		return {
+			actionId = self.actionId,
+			userId = self.userId,
+			targetUserId = self.targetUserId,
+			mapName = self.mapName,
+			itemId = self.itemId,
+			monsterId = self.monsterId,
+			amount = self.amount,
+			beforeValue = self.beforeValue,
+			afterValue = self.afterValue,
+			result = self.result,
+			reason = self.reason
+		}
+	end
+
+end

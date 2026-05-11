@@ -1,0 +1,33 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "codeblock://296dd74e-c48c-4b1f-abd2-0833f6a6131c",
+  "ContentType": "x-mod/codeblock",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "CoreVersion": {
+        "Major": 0,
+        "Minor": 2
+      },
+      "ScriptVersion": {
+        "Major": 1,
+        "Minor": 1
+      },
+      "Description": "",
+      "Id": "296dd74e-c48c-4b1f-abd2-0833f6a6131c",
+      "Language": 1,
+      "Name": "GameManager",
+      "Type": 5,
+      "Source": 0,
+      "Target": "codeblock://0c610ba8-ff33-421a-9378-0e45b3d74b8c"
+    }
+  }
+}

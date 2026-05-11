@@ -1,0 +1,90 @@
+@Logic
+script ActionLogManager extends Singleton
+
+	property table _buffer = {}
+
+	@ExecSpace("ServerOnly")
+	method void ServerStart()
+		self:ClearBuffer()
+	end
+
+	@ExecSpace("ServerOnly")
+	method void Write(integer actionId, table entry)
+		if not self:_IsValidActionId(actionId) then
+			return
+		end
+		
+		local normalized = self:_NormalizeEntry(actionId, entry)
+		table.insert(self._buffer, normalized)
+	end
+
+	@ExecSpace("ServerOnly")
+	method void WriteSecurityFailure(string userId, string reason)
+		self:Write(_EActionId.SECURITY_FAILURE, {
+			userId = userId,
+			result = "deny",
+			reason = reason
+		})
+	end
+
+	@ExecSpace("ServerOnly")
+	method table GetBufferedEntries()
+		return _CommonUtils:DeepCopyTable(self._buffer)
+	end
+
+	@ExecSpace("ServerOnly")
+	method void ClearBuffer()
+		self._buffer = {}
+	end
+
+	method boolean _IsValidActionId(integer actionId)
+		return actionId == _EActionId.ITEM_BUY
+		or actionId == _EActionId.ITEM_SELL
+		or actionId == _EActionId.MESO_CHANGE
+		or actionId == _EActionId.ITEM_GAIN
+		or actionId == _EActionId.LEVEL_UP
+		or actionId == _EActionId.MONSTER_KILL
+		or actionId == _EActionId.MAP_MOVE
+		or actionId == _EActionId.DATA_SAVE
+		or actionId == _EActionId.ADMIN_COMMAND
+		or actionId == _EActionId.SECURITY_FAILURE
+	end
+
+	method table _NormalizeEntry(integer actionId, table entry)
+		local source = entry
+		if source == nil then
+			source = {}
+		end
+		
+		return {
+			actionId = actionId,
+			userId = self:_StringOrDefault(source.userId, ""),
+			targetUserId = self:_StringOrDefault(source.targetUserId, ""),
+			mapName = self:_StringOrDefault(source.mapName, ""),
+			itemId = self:_IntegerOrDefault(source.itemId, 0),
+			monsterId = self:_IntegerOrDefault(source.monsterId, 0),
+			amount = self:_IntegerOrDefault(source.amount, 0),
+			beforeValue = source.beforeValue,
+			afterValue = source.afterValue,
+			result = self:_StringOrDefault(source.result, ""),
+			reason = self:_StringOrDefault(source.reason, "")
+		}
+	end
+
+	method string _StringOrDefault(any value, string fallback)
+		if type(value) == "string" then
+			return value
+		end
+		
+		return fallback
+	end
+
+	method integer _IntegerOrDefault(any value, integer fallback)
+		if _CommonUtils:IsInteger(value) then
+			return value
+		end
+		
+		return fallback
+	end
+
+end

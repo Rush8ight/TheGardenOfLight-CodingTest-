@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "directory://663d370a1da34269b887c4b0eab55f03",
+  "ContentType": "x-mod/directory",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "entry_id": "directory://663d370a1da34269b887c4b0eab55f03",
+      "name": "TheGardenOfLight",
+      "lock": false,
+      "folding": false,
+      "nameEditable": true
+    }
+  }
+}

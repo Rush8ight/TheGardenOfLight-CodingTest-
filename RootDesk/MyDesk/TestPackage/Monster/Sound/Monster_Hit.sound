@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sound://c3185a2acf0b40349ebf9678964f63cf",
+  "ContentType": "x-mod/sound",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sound/c3185a2acf0b40349ebf9678964f63cf/639134745632613895",
+      "upload_hash": "F2F45CA26F4EC0A32FE20C638317EF66032F2EBCB0B4A92B44A91DCC80CF3DD8",
+      "name": "Monster_Hit",
+      "resource_guid": "c3185a2acf0b40349ebf9678964f63cf",
+      "resource_version": "69f84303806c10b337c8375f"
+    }
+  }
+}

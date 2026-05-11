@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sprite://5909b55e3c2e4b1b9dafa280b17fe61f",
+  "ContentType": "x-mod/sprite",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sprite/5909b55e3c2e4b1b9dafa280b17fe61f/639134721776833221",
+      "upload_hash": "CB9208F283A29CC298349628750194D8315BEB69F42358FC832B7FADB14EDE9F",
+      "name": "Shop_backgrnd",
+      "resource_guid": "5909b55e3c2e4b1b9dafa280b17fe61f",
+      "resource_version": "69f839b15c674862d152d7c4"
+    }
+  }
+}

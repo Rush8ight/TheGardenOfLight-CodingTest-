@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sound://6427880f79d941e0a319acb4785d68af",
+  "ContentType": "x-mod/sound",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sound/6427880f79d941e0a319acb4785d68af/639134745632534355",
+      "upload_hash": "FC118B2605D40E87C1E6A44451DAB6F48EDBEA4817434F9D9310109A2DF1D4E1",
+      "name": "Monster_Die",
+      "resource_guid": "6427880f79d941e0a319acb4785d68af",
+      "resource_version": "69f84303c4167207ae44fa7e"
+    }
+  }
+}

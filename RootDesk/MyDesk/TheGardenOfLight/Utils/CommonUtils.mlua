@@ -1,0 +1,75 @@
+@Logic
+script CommonUtils extends Logic
+
+	method boolean IsInteger(any value)
+		return (type(value) == "integer" or (type(value) == "number" and value == math.tointeger(value)))
+	end
+
+	method boolean IsPositiveInteger(any value)
+		if not self:IsInteger(value) then
+			return false
+		end
+		
+		return value > 0
+	end
+
+	method boolean IsNonNegativeInteger(any value)
+		if not self:IsInteger(value) then
+			return false
+		end
+		
+		return value >= 0
+	end
+
+	method boolean IsValidCount(any value)
+		return self:IsPositiveInteger(value)
+	end
+
+	method boolean IsValidUserId(string userId)
+		if _UtilLogic:IsNilorEmptyString(userId) then
+			return false
+		end
+		
+		local length = string.len(userId)
+		if length < 17 or length > 18 then
+			return false
+		end
+		
+		return string.match(userId, "^%d+$") ~= nil
+	end
+
+	method table DeepCopyTable(table source)
+		if source == nil then
+			return {}
+		end
+		
+		return self:_DeepCopyTableInternal(source, {})
+	end
+
+	method table _DeepCopyTableInternal(table source, table seen)
+		if seen[source] ~= nil then
+			return seen[source]
+		end
+		
+		local copy = {}
+		seen[source] = copy
+		
+		for key, value in pairs(source) do
+			local nextKey = key
+			local nextValue = value
+		
+			if type(key) == "table" then
+				nextKey = self:_DeepCopyTableInternal(key, seen)
+			end
+		
+			if type(value) == "table" then
+				nextValue = self:_DeepCopyTableInternal(value, seen)
+			end
+		
+			copy[nextKey] = nextValue
+		end
+		
+		return copy
+	end
+
+end

@@ -1,0 +1,26 @@
+@Logic
+script IEnum extends Logic
+
+	property integer ENDENUM = 0
+
+	property table _nametable = {}
+
+	property boolean _initialized = false
+
+	method void Init()
+		self._initialized = true
+	end
+
+	method string ToString(integer value)
+		if not self._initialized then
+			self:Init()
+		end
+		
+		if self._nametable[value] then
+			return self._nametable[value]
+		end
+		
+		return ""
+	end
+
+end

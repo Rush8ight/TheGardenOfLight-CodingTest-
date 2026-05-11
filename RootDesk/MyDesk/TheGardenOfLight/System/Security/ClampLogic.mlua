@@ -1,0 +1,60 @@
+@Logic
+script ClampLogic extends Logic
+
+	method integer ClampInteger(any value, integer minValue, integer maxValue, integer fallback)
+		if not _CommonUtils:IsInteger(value) then
+			return fallback
+		end
+		
+		if value < minValue then
+			return minValue
+		end
+		
+		if value > maxValue then
+			return maxValue
+		end
+		
+		return value
+	end
+
+	method number ClampNumber(any value, number minValue, number maxValue, number fallback)
+		if type(value) ~= "number" then
+			return fallback
+		end
+		
+		if value < minValue then
+			return minValue
+		end
+		
+		if value > maxValue then
+			return maxValue
+		end
+		
+		return value
+	end
+
+	method integer ClampLevel(any value)
+		return self:ClampInteger(value, _Constants.LEVEL_MIN, _Constants.LEVEL_MAX, _Constants.START_LEVEL)
+	end
+
+	method integer ClampExp(any value)
+		return self:ClampInteger(value, _Constants.EXP_MIN, _Constants.EXP_MAX, _Constants.START_EXP)
+	end
+
+	method integer ClampMeso(any value)
+		return self:ClampInteger(value, _Constants.MESO_MIN, _Constants.MESO_MAX, _Constants.START_MESO)
+	end
+
+	method integer ClampItemCount(any value)
+		return self:ClampInteger(value, _Constants.ITEM_COUNT_MIN, _Constants.ITEM_COUNT_MAX, _Constants.ITEM_COUNT_MIN)
+	end
+
+	method number ClampMoveSpeed(any value)
+		return self:ClampNumber(value, _Constants.MOVE_SPEED_MIN, _Constants.MOVE_SPEED_MAX, _Constants.MOVE_SPEED_DEFAULT)
+	end
+
+	method number ClampJumpPower(any value)
+		return self:ClampNumber(value, _Constants.JUMP_POWER_MIN, _Constants.JUMP_POWER_MAX, _Constants.JUMP_POWER_DEFAULT)
+	end
+
+end

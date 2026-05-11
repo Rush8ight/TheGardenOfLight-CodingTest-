@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sprite://2c99a36aa8aa497293cdbe129206ab18",
+  "ContentType": "x-mod/sprite",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sprite/2c99a36aa8aa497293cdbe129206ab18/639134745624367962",
+      "upload_hash": "6C04E2B4F4EDE4406F9179A4BC1CBB62D3537EDFEC2BCF857E6BB0536177B134",
+      "name": "Shop_BtExit_mouseOver_EN",
+      "resource_guid": "2c99a36aa8aa497293cdbe129206ab18",
+      "resource_version": "69f843029b6455dd38d05f9b"
+    }
+  }
+}

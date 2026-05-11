@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sound://2c3bd2947e0842b9826eb5855459a06d",
+  "ContentType": "x-mod/sound",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "a4/e0/a4e09e9c110e48ee84f59fe4c82ce373/sound/2c3bd2947e0842b9826eb5855459a06d/639134721780484643",
+      "upload_hash": "C50A844749E4FC75CFDA12DE4F8B7E436818B16186834D9BD8300A05B3D8B10C",
+      "name": "DragEnd",
+      "resource_guid": "2c3bd2947e0842b9826eb5855459a06d",
+      "resource_version": "69f839b29b6455dd38d05f9a"
+    }
+  }
+}

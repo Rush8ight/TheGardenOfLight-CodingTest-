@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "directory://bd410a509c2c4253b2ec36a5755cc4aa",
+  "ContentType": "x-mod/directory",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "entry_id": "directory://bd410a509c2c4253b2ec36a5755cc4aa",
+      "name": "UIResource",
+      "lock": false,
+      "folding": false,
+      "nameEditable": true
+    }
+  }
+}

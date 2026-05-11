@@ -1,0 +1,75 @@
+@Logic
+script SavePayloadValidationLogic extends Logic
+
+	@ExecSpace("ServerOnly")
+	method SSecurityResult ValidateAndNormalize(any payload)
+		if type(payload) ~= "table" then
+			return self:_Deny("payload_not_table", _PlayerStateFactory:CreateDefaultState():ToTable())
+		end
+		
+		local normalized = _PlayerStateFactory:NormalizeState(payload)
+		local reason = self:_FindPayloadIssue(payload)
+		if reason ~= "" then
+			return self:_Deny(reason, normalized:ToTable())
+		end
+		
+		local result = SSecurityResult()
+		result:Init(true, "", normalized:ToTable(), true)
+		return result
+	end
+
+	method string _FindPayloadIssue(table payload)
+		if not _RequestValidationLogic:IsValidLevel(payload.level) then
+			return "invalid_level"
+		end
+		
+		if not _RequestValidationLogic:IsValidMeso(payload.meso) then
+			return "invalid_meso"
+		end
+		
+		if not _CommonUtils:IsNonNegativeInteger(payload.exp) then
+			return "invalid_exp"
+		end
+		
+		if payload.language ~= nil and not _RequestValidationLogic:IsValidLanguage(payload.language) then
+			return "invalid_language"
+		end
+		
+		if payload.movementMultiplier ~= nil and type(payload.movementMultiplier) ~= "number" then
+			return "invalid_movement_multiplier"
+		end
+		
+		if payload.jumpMultiplier ~= nil and type(payload.jumpMultiplier) ~= "number" then
+			return "invalid_jump_multiplier"
+		end
+		
+		if payload.inventory ~= nil and type(payload.inventory) ~= "table" then
+			return "invalid_inventory"
+		end
+		
+		if type(payload.inventory) == "table" then
+			for itemId, count in pairs(payload.inventory) do
+				if not _CommonUtils:IsInteger(itemId) or not _RequestValidationLogic:IsValidItemId(itemId) then
+					return "invalid_inventory_item"
+				end
+		
+				if not _RequestValidationLogic:IsValidCount(count) then
+					return "invalid_inventory_count"
+				end
+			end
+		end
+		
+		if payload.equippedWeapon ~= nil and payload.equippedWeapon ~= 0 and not _RequestValidationLogic:IsValidItemId(payload.equippedWeapon) then
+			return "invalid_equipped_weapon"
+		end
+		
+		return ""
+	end
+
+	method SSecurityResult _Deny(string reason, table normalized)
+		local result = SSecurityResult()
+		result:Init(false, reason, normalized, true)
+		return result
+	end
+
+end

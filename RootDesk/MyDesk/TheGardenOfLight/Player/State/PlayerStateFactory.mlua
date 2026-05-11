@@ -1,0 +1,69 @@
+@Logic
+script PlayerStateFactory extends Logic
+
+	method SPlayerState CreateDefaultState()
+		local state = SPlayerState()
+		state.level = _Constants.START_LEVEL
+		state.exp = _Constants.START_EXP
+		state.meso = _Constants.START_MESO
+		state.inventory = {}
+		state.equippedWeapon = _Constants.START_EQUIPPED_WEAPON
+		state.isAdmin = false
+		
+		return state
+	end
+
+	method SPlayerState NormalizeState(table source)
+		local state = self:CreateDefaultState()
+		if source == nil then
+			return state
+		end
+		
+		state.level = _ClampLogic:ClampLevel(source.level)
+		state.exp = _ClampLogic:ClampExp(source.exp)
+		state.meso = _ClampLogic:ClampMeso(source.meso)
+		state.equippedWeapon = self:_NormalizeEquippedWeapon(source.equippedWeapon)
+		state.isAdmin = source.isAdmin == true
+		state.inventory = self:_NormalizeInventory(source.inventory)
+		
+		return state
+	end
+
+	method integer _NormalizeEquippedWeapon(any itemId)
+		if itemId == nil or itemId == 0 then
+			return _Constants.START_EQUIPPED_WEAPON
+		end
+		
+		if _RequestValidationLogic:IsValidItemId(itemId) then
+			return itemId
+		end
+		
+		return _Constants.START_EQUIPPED_WEAPON
+	end
+
+	method string _NormalizeLanguage(any language)
+		if type(language) == "string" and _RequestValidationLogic:IsValidLanguage(language) then
+			return language
+		end
+		
+		return _Constants.LANG_KO
+	end
+
+	method table _NormalizeInventory(any inventory)
+		local normalized = {}
+		if type(inventory) ~= "table" then
+			return normalized
+		end
+		
+		for itemId, count in pairs(inventory) do
+			if _CommonUtils:IsInteger(itemId)
+			and _RequestValidationLogic:IsValidItemId(itemId)
+			and _RequestValidationLogic:IsValidCount(count) then
+				normalized[itemId] = _ClampLogic:ClampItemCount(count)
+			end
+		end
+		
+		return normalized
+	end
+
+end

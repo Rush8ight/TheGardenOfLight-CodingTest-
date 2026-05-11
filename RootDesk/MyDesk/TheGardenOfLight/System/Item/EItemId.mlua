@@ -1,0 +1,23 @@
+@Logic
+script EItemId extends IEnum
+
+	property integer WIZARD_WAND = 1372001
+
+	property integer WOODEN_WAND = 1372005
+
+	property integer WIZARD_STAFF = 1382002
+
+	property integer CIRCLE_WINDED_STAFF = 1382017
+
+	property integer SOLID_HORN = 4000073
+
+	method void Init()
+		self._nametable[self.WIZARD_WAND] = "WIZARD_WAND"
+		self._nametable[self.WOODEN_WAND] = "WOODEN_WAND"
+		self._nametable[self.WIZARD_STAFF] = "WIZARD_STAFF"
+		self._nametable[self.CIRCLE_WINDED_STAFF] = "CIRCLE_WINDED_STAFF"
+		self._nametable[self.SOLID_HORN] = "SOLID_HORN"
+		self._initialized = true
+	end
+
+end
